@@ -1,0 +1,143 @@
+//PROPUESTO
+
+package clase;
+
+public class Factura {
+    // Atributos privados
+    private String ruc;
+    private String empresa;
+    private int unidades;
+    private double precioUnitario;
+
+    // Constructor
+    public Factura(String ruc, String empresa, int unidades, double precioUnitario) {
+        this.ruc = ruc;
+        this.empresa = empresa;
+        this.unidades = unidades;
+        this.precioUnitario = precioUnitario;
+    }
+
+    // Métodos de acceso set/get
+    public String getRuc() {
+        return ruc;
+    }
+
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    public int getUnidades() {
+        return unidades;
+    }
+
+    public double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    // Método para calcular el importe facturado
+    public double importeFacturado() {
+        return unidades * precioUnitario;
+    }
+}
+
+
+
+package arreglo;
+
+import clase.Factura;
+import java.util.ArrayList;
+
+public class ArregloFacturas {
+    // Atributo privado para almacenar facturas
+    private ArrayList<Factura> fac;
+
+    // Constructor que crea el ArrayList y agrega ocho facturas iniciales
+    public ArregloFacturas() {
+        fac = new ArrayList<Factura>();
+        // Agregar aquí las ocho facturas iniciales
+    }
+
+    // Método para adicionar una nueva factura al ArrayList
+    public void adicionar(Factura factura) {
+        fac.add(factura);
+    }
+
+    // Método para obtener la cantidad de facturas registradas
+    public int tamanio() {
+        return fac.size();
+    }
+
+    // Método para obtener una factura en una posición específica
+    public Factura obtener(int posicion) {
+        return fac.get(posicion);
+    }
+
+    // Método para calcular la suma de todos los importes facturados
+    public double sumaImportesFacturados() {
+        double suma = 0.0;
+        for (Factura factura : fac) {
+            suma += factura.importeFacturado();
+        }
+        return suma;
+    }
+
+    // Método para calcular el importe promedio facturado
+    public double importePromedioFacturado() {
+        return sumaImportesFacturados() / fac.size();
+    }
+
+    // Método para encontrar el menor importe facturado
+    public double menorImporteFacturado() {
+        double menor = Double.MAX_VALUE;
+        for (Factura factura : fac) {
+            double importe = factura.importeFacturado();
+            if (importe < menor) {
+                menor = importe;
+            }
+        }
+        return menor;
+    }
+
+    // Método para encontrar el mayor importe facturado
+    public double mayorImporteFacturado() {
+        double mayor = 0.0;
+        for (Factura factura : fac) {
+            double importe = factura.importeFacturado();
+            if (importe > mayor) {
+                mayor = importe;
+            }
+        }
+        return mayor;
+    }
+
+    // Método para encontrar el nombre de la primera empresa cuyo importe facturado sea menor al importe promedio
+    public String primeraEmpresaMenorAlPromedio() {
+        double promedio = importePromedioFacturado();
+        for (Factura factura : fac) {
+            if (factura.importeFacturado() < promedio) {
+                return factura.getEmpresa();
+            }
+        }
+        return null; // Si no se encuentra ninguna empresa que cumpla con el criterio
+    }
+}
+
+
+
+public class ClasePrincipal {
+    public static void main(String[] args) {
+        // Declaración global del arreglo de facturas
+        ArregloFacturas af = new ArregloFacturas();
+
+        // Simulación de agregar una nueva factura al hacer clic en el botón "Adicionar"
+        Factura nuevaFactura = new Factura("RUC9", "Empresa9", 12, 6.5);
+        af.adicionar(nuevaFactura);
+
+        // Mostrar los resultados de los métodos complementarios al hacer clic en el botón "Reportar"
+        System.out.println("Suma de todos los importes facturados: " + af.sumaImportesFacturados());
+        System.out.println("Importe promedio facturado: " + af.importePromedioFacturado());
+        System.out.println("Menor importe facturado: " + af.menorImporteFacturado());
+        System.out.println("Mayor importe facturado: " + af.mayorImporteFacturado());
+        System.out.println("Nombre de la primera empresa con importe menor al promedio: " + af.primeraEmpresaMenorAlPromedio());
+    }
+}
