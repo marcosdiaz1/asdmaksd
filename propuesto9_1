@@ -73,6 +73,7 @@ public class ArregloFacturas {
     }
 
     // Método para calcular la suma de todos los importes facturados
+
     public double sumaImportesFacturados() {
         double suma = 0.0;
         for (Factura factura : fac) {
@@ -80,6 +81,9 @@ public class ArregloFacturas {
         }
         return suma;
     }
+
+for(int i=0;i<tamanio();i++){
+
 
     // Método para calcular el importe promedio facturado
     public double importePromedioFacturado() {
