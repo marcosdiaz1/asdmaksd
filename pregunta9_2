@@ -74,3 +74,102 @@ public class ArregloDocentes {
 	}
 	
 }
+
+
+package clase;
+
+public class Docente {
+	private int codigo, horas;
+	private String nombre;
+	private double tarifa;
+	
+	public Docente(int codigo, int horas, String nombre, double tarifa) {
+		this.codigo = codigo;
+		this.horas = horas;
+		this.nombre = nombre;
+		this.tarifa = tarifa;
+	}
+	public int getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+	public int getHoras() {
+		return horas;
+	}
+	public void setHoras(int horas) {
+		this.horas = horas;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public double getTarifa() {
+		return tarifa;
+	}
+	public void setTarifa(double tarifa) {
+		this.tarifa = tarifa;
+	}
+	
+	public double sueldo(){
+		return horas*tarifa;
+	}
+	
+}
+
+
+//  Declaración global
+	ArregloDocentes ad = new ArregloDocentes();
+	
+	protected void actionPerformedBtnAdicionar(ActionEvent arg0) {
+		/**
+		 * Agrega un nuevo docente
+		 */	
+		int codigo = leerCodigo();
+		String nombre = leerNombre();
+		int horas = leerHoras();
+		double tarifa = leerTarifa();
+		Docente nuevo = new Docente(codigo,horas, nombre, tarifa);
+		ad.adicionar(nuevo);
+		listar();
+		limpieza();
+	}
+	protected void actionPerformedBtnReportar(ActionEvent arg0) {
+		/**
+		 * Visualiza un reporte
+		 */
+		txtS.setText("");
+		imprimir("cantidad de docentes :  " + ad.tamanio());
+		imprimir("sueldo promedio :  " + ad.sueldoPromedio());
+		imprimir("sueldo  mayor :  " + ad.sueldoMayor());
+		imprimir("sueldo  menor :  " + ad.sueldoMenor());
+		imprimir("tarifa mayor :  " + ad.tarifaMayor());
+		imprimir("tarifa menor :  " + ad.tarifaMenor());
+  	}
+	//  Métodos tipo void (sin parámetros)
+	void imprimir() {
+		imprimir("");
+	}
+	void limpieza() {
+		txtCodigo.setText("");
+		txtNombre.setText("");
+		txtHoras.setText("");
+		txtTarifa.setText("");
+		txtS.setText("");
+		txtCodigo.requestFocus();
+	}
+   	void listar() {
+   		modelo.setRowCount(0);
+		for (int i=0; i<ad.tamanio(); i++) {
+			Object[] fila = { ad.obtener(i).getCodigo(),
+							  ad.obtener(i).getNombre(),
+					          ad.obtener(i).getHoras(),
+					          ad.obtener(i).getTarifa(),
+					          ad.obtener(i).sueldo() };
+			modelo.addRow(fila);
+		}
+
+	}
