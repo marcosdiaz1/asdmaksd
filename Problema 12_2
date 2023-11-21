@@ -1,0 +1,122 @@
+// Paquete padre
+public class Licencia {
+    protected String clase;
+    protected String categoria;
+    protected String fechaEmision;
+    protected String fechaRenovacion;
+
+    // Constructor de la clase Licencia
+    public Licencia(String clase, String categoria, String fechaEmision, String fechaRenovacion) {
+        this.clase = clase;
+        this.categoria = categoria;
+        this.fechaEmision = fechaEmision;
+        this.fechaRenovacion = fechaRenovacion;
+    }
+
+    // Método para obtener los datos completos de la licencia
+    public String datosCompletos() {
+        return "Clase          : " + clase + "\n" +
+               "Categoría      : " + categoria + "\n" +
+               "Fecha Emisión  : " + fechaEmision + "\n" +
+               "Fecha Renovación: " + fechaRenovacion + "\n" +
+               "Código         : " + primerCodigo();
+    }
+
+    // Método para generar el primer código
+    protected String primerCodigo() {
+        return clase + "-" + fechaEmision;
+    }
+}
+
+
+
+// Paquete hijos
+public class Particular extends Licencia {
+    private int dni;
+
+    // Constructor de la clase Particular
+    public Particular(String clase, String categoria, String fechaEmision, String fechaRenovacion, int dni) {
+        super(clase, categoria, fechaEmision, fechaRenovacion);
+        this.dni = dni;
+    }
+
+    // Método para obtener los datos completos de la licencia particular
+    public String datosCompletos() {
+        return super.datosCompletos() + "\n" +
+               "DNI            : " + dni + "\n" +
+               "Segundo Código : " + segundoCodigo();
+    }
+
+    // Método para generar el segundo código en licencias particulares
+    private String segundoCodigo() {
+        return categoria + "-" + dni;
+    }
+}
+
+
+
+// Paquete hijos
+public class Profesional extends Licencia {
+    private String ruc;
+
+    // Constructor de la clase Profesional
+    public Profesional(String clase, String categoria, String fechaEmision, String fechaRenovacion, String ruc) {
+        super(clase, categoria, fechaEmision, fechaRenovacion);
+        this.ruc = ruc;
+    }
+
+    // Método para obtener los datos completos de la licencia profesional
+    public String datosCompletos() {
+        return super.datosCompletos() + "\n" +
+               "RUC            : " + ruc + "\n" +
+               "Segundo Código : " + segundoCodigo();
+    }
+
+    // Método para generar el segundo código en licencias profesionales
+    private String segundoCodigo() {
+        return categoria + "-" + ruc;
+    }
+}
+
+
+
+// Clase principal
+public class Principal {
+    public static void main(String[] args) {
+        // Creación de objetos
+        Licencia licencia = new Licencia("A", "Categoria 1", "01/01/22", "01/01/23");
+        Particular particular = new Particular("B", "Categoria 2", "02/02/22", "02/02/23", 123456789);
+        Profesional profesional = new Profesional("C", "Categoria 3", "03/03/22", "03/03/23", "12345678901");
+
+        // Llamada al método listado para mostrar la información
+        listado(licencia);
+        listado(particular);
+        listado(profesional);
+    }
+
+    // Método para mostrar la información completa de la licencia
+    public static void listado(Licencia licencia) {
+        // Determina el tipo de licencia utilizando instanceof
+        if (licencia instanceof Particular) {
+            imprimir(">>> Licencia Particular");
+        } else if (licencia instanceof Profesional) {
+            imprimir(">>> Licencia Profesional");
+        } else {
+            imprimir(">>> Licencia General");
+        }
+
+        // Muestra la información completa de la licencia
+        imprimir(licencia.datosCompletos());
+        imprimir();
+    }
+
+    // Método para imprimir mensajes en la consola
+    private static void imprimir(String mensaje) {
+        System.out.println(mensaje);
+    }
+
+    // Método para imprimir una línea en blanco
+    private static void imprimir() {
+        System.out.println();
+    }
+}
